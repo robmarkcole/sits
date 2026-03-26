@@ -17,7 +17,7 @@ class PredictionInfoBar(QWidget):
         layout.setSpacing(20)
 
         # Annotated class
-        self._annotated_label = QLabel("Anotado: -")
+        self._annotated_label = QLabel("Annotated: -")
         self._annotated_label.setStyleSheet("""
             color: #cccccc;
             font-size: 12px;
@@ -26,7 +26,7 @@ class PredictionInfoBar(QWidget):
         layout.addWidget(self._annotated_label)
 
         # Predicted class
-        self._predicted_label = QLabel("Predito: -")
+        self._predicted_label = QLabel("Predicted: -")
         self._predicted_label.setStyleSheet("""
             color: #cccccc;
             font-size: 12px;
@@ -86,17 +86,17 @@ class PredictionInfoBar(QWidget):
         # Format annotated class
         if annotated_class:
             display_annotated = annotated_class.replace("_", " ").title()
-            self._annotated_label.setText(f"Anotado: {display_annotated}")
+            self._annotated_label.setText(f"Annotated: {display_annotated}")
         else:
-            self._annotated_label.setText("Anotado: -")
+            self._annotated_label.setText("Annotated: -")
 
         # Format predicted class
         if predicted_class:
             display_predicted = predicted_class.replace("_", " ").title()
-            self._predicted_label.setText(f"Predito: {display_predicted}")
+            self._predicted_label.setText(f"Predicted: {display_predicted}")
             self._predicted_label.setVisible(True)
         else:
-            self._predicted_label.setText("Predito: -")
+            self._predicted_label.setText("Predicted: -")
             self._predicted_label.setVisible(False)
 
         # Format confidence
@@ -119,14 +119,14 @@ class PredictionInfoBar(QWidget):
         # Update status (match/mismatch)
         if annotated_class and predicted_class:
             if annotated_class == predicted_class:
-                self._status_label.setText("CONCORDANTE")
+                self._status_label.setText("MATCH")
                 self._status_label.setStyleSheet("""
                     color: #4ec9b0;
                     font-size: 11px;
                     font-weight: bold;
                 """)
             else:
-                self._status_label.setText("DISCORDANTE")
+                self._status_label.setText("MISMATCH")
                 self._status_label.setStyleSheet("""
                     color: #f14c4c;
                     font-size: 11px;
@@ -140,7 +140,7 @@ class PredictionInfoBar(QWidget):
         # Update label quality (from Cleanlab)
         if label_quality is not None:
             quality_pct = label_quality * 100
-            self._quality_label.setText(f"Qualidade: {quality_pct:.0f}%")
+            self._quality_label.setText(f"Quality: {quality_pct:.0f}%")
             self._quality_label.setVisible(True)
 
             # Color based on quality level
@@ -156,8 +156,8 @@ class PredictionInfoBar(QWidget):
 
     def clear(self) -> None:
         """Clear the prediction display."""
-        self._annotated_label.setText("Anotado: -")
-        self._predicted_label.setText("Predito: -")
+        self._annotated_label.setText("Annotated: -")
+        self._predicted_label.setText("Predicted: -")
         self._predicted_label.setVisible(False)
         self._confidence_label.setText("")
         self._confidence_label.setVisible(False)

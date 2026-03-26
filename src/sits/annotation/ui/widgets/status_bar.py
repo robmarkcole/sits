@@ -45,7 +45,7 @@ class StatusBar(QStatusBar):
         """)
 
         # Project name
-        self._project_label = QLabel("Nenhum projeto")
+        self._project_label = QLabel("No project")
         self._project_label.setStyleSheet("font-weight: bold; color: #ffffff;")
         self.addWidget(self._project_label)
 
@@ -66,7 +66,7 @@ class StatusBar(QStatusBar):
         self.addWidget(self._coords_label)
 
         # Explored count (permanent widget - right side)
-        self._explored_label = QLabel("Exploradas: 0")
+        self._explored_label = QLabel("Explored: 0")
         self._explored_label.setStyleSheet("color: #ffffff;")
         self.addPermanentWidget(self._explored_label)
 
@@ -92,9 +92,9 @@ class StatusBar(QStatusBar):
             name: Project name or None.
         """
         if name:
-            self._project_label.setText(f"Projeto: {name}")
+            self._project_label.setText(f"Project: {name}")
         else:
-            self._project_label.setText("Nenhum projeto")
+            self._project_label.setText("No project")
 
     def set_statistics(
         self,
@@ -170,10 +170,10 @@ class StatusBar(QStatusBar):
         if total and total > 0:
             percentage = (explored / total) * 100
             self._explored_label.setText(
-                f"Exploradas: {explored} ({percentage:.2f}%)"
+                f"Explored: {explored} ({percentage:.2f}%)"
             )
         else:
-            self._explored_label.setText(f"Exploradas: {explored}")
+            self._explored_label.setText(f"Explored: {explored}")
 
     def show_message(self, message: str, timeout_ms: int = 3000) -> None:
         """
@@ -199,7 +199,7 @@ class StatusBar(QStatusBar):
 
     def clear(self) -> None:
         """Reset status bar to default state."""
-        self._project_label.setText("Nenhum projeto")
+        self._project_label.setText("No project")
         self._stats_label.setText("--")
         self._coords_label.setText("Coord: --")
-        self._explored_label.setText("Exploradas: 0")
+        self._explored_label.setText("Explored: 0")

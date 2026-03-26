@@ -159,9 +159,9 @@ class MainWindow(QMainWindow):
         menubar = self.menuBar()
 
         # File menu
-        file_menu = menubar.addMenu("&Arquivo")
+        file_menu = menubar.addMenu("&File")
 
-        open_action = QAction("&Abrir Projeto...", self)
+        open_action = QAction("&Open Project...", self)
         open_action.setShortcut(QKeySequence.StandardKey.Open)
         open_action.triggered.connect(self._on_open_project)
         file_menu.addAction(open_action)
@@ -174,16 +174,16 @@ class MainWindow(QMainWindow):
         file_menu.addAction(quit_action)
 
         # Help menu
-        help_menu = menubar.addMenu("A&juda")
+        help_menu = menubar.addMenu("&Help")
 
-        shortcuts_action = QAction("&Atalhos de Teclado", self)
+        shortcuts_action = QAction("&Keyboard Shortcuts", self)
         shortcuts_action.setShortcut(QKeySequence("F1"))
         shortcuts_action.triggered.connect(self._on_show_shortcuts)
         help_menu.addAction(shortcuts_action)
 
         help_menu.addSeparator()
 
-        about_action = QAction("&Sobre", self)
+        about_action = QAction("&About", self)
         about_action.triggered.connect(self._on_about)
         help_menu.addAction(about_action)
 
@@ -350,7 +350,7 @@ class MainWindow(QMainWindow):
             self._model_review_panel.setVisible(False)
             self._model_review_active = False
             self._train_panel.refresh()
-            self._status_bar.show_message("Modo de treinamento", 2000)
+            self._status_bar.show_message("Training mode", 2000)
         else:
             # Switch to annotation/review panel
             self._main_stack.setCurrentIndex(0)
@@ -380,7 +380,7 @@ class MainWindow(QMainWindow):
                     self._start_review_prediction_computation()
                     return  # Will continue in _on_review_predictions_finished
                 else:
-                    self._status_bar.show_message("Modo de revisao (sem modelo)", 2000)
+                    self._status_bar.show_message("Review mode (no model)", 2000)
 
                 # Setup review filter bar
                 self._setup_review_filter_bar()
@@ -389,7 +389,7 @@ class MainWindow(QMainWindow):
                 self._refresh_review_samples()
                 self._load_review_sample()
             else:
-                self._status_bar.show_message("Modo de anotacao", 2000)
+                self._status_bar.show_message("Annotate mode", 2000)
                 self._model_review_active = False
                 self._model_review_panel.setVisible(False)
                 self._prediction_info_bar.setVisible(False)
@@ -404,7 +404,7 @@ class MainWindow(QMainWindow):
             return
 
         if not self.app.has_active_helper_model():
-            self._status_bar.show_message("Nenhum modelo ativo. Treine um modelo primeiro.", 3000)
+            self._status_bar.show_message("No active model. Train a model first.", 3000)
             return
 
         self._model_review_active = not self._model_review_active
@@ -414,14 +414,14 @@ class MainWindow(QMainWindow):
             self._nav_bar.setVisible(False)
             self._model_review_panel.setVisible(True)
             self._init_model_review()
-            self._status_bar.show_message("Analise com modelo ON [T] para desligar", 2000)
+            self._status_bar.show_message("Model-assisted review ON [T] to turn off", 2000)
         else:
             # Switch to normal review
             self._model_review_panel.setVisible(False)
             self._nav_bar.setVisible(True)
             self._review_index = 0
             self._load_review_sample()
-            self._status_bar.show_message("Revisao normal [T] para analise com modelo", 2000)
+            self._status_bar.show_message("Normal review [T] for model-assisted review", 2000)
 
     def _is_review_mode(self) -> bool:
         """Check if currently in review mode."""
@@ -443,9 +443,9 @@ class MainWindow(QMainWindow):
         """Start computing review predictions in background thread."""
         # Create progress dialog
         self._review_progress_dialog = QProgressDialog(
-            "Carregando predicoes...", None, 0, 100, self
+            "Loading predictions...", None, 0, 100, self
         )
-        self._review_progress_dialog.setWindowTitle("Modo de Revisao")
+        self._review_progress_dialog.setWindowTitle("Review Mode")
         self._review_progress_dialog.setWindowModality(Qt.WindowModality.WindowModal)
         self._review_progress_dialog.setMinimumDuration(0)
         self._review_progress_dialog.setValue(0)
@@ -470,7 +470,7 @@ class MainWindow(QMainWindow):
             pct = int(100 * current / total) if total > 0 else 0
             self._review_progress_dialog.setValue(pct)
             self._review_progress_dialog.setLabelText(
-                f"Carregando predicoes... {current}/{total}"
+                f"Loading predictions... {current}/{total}"
             )
 
     def _on_review_predictions_finished(self, success: bool) -> None:
@@ -489,9 +489,9 @@ class MainWindow(QMainWindow):
 
         # Continue with review mode setup
         if success:
-            self._status_bar.show_message("Modo de revisao", 2000)
+            self._status_bar.show_message("Review mode", 2000)
         else:
-            self._status_bar.show_message("Modo de revisao (falha ao carregar predicoes)", 3000)
+            self._status_bar.show_message("Review mode (failed to load predictions)", 3000)
 
         # Setup review filter bar
         self._setup_review_filter_bar()
@@ -588,7 +588,7 @@ class MainWindow(QMainWindow):
     def _on_open_project(self) -> None:
         """Handle open project action."""
         file_path, _ = QFileDialog.getOpenFileName(
-            self, "Abrir Projeto", "",
+            self, "Open Project", "",
             "YAML Files (*.yaml *.yml);;All Files (*)",
         )
         if file_path:
@@ -600,7 +600,7 @@ class MainWindow(QMainWindow):
             self.app.load_project(config_path)
             self._on_project_loaded()
         except ApplicationError as e:
-            QMessageBox.critical(self, "Erro", f"Falha ao carregar projeto:\n{e}")
+            QMessageBox.critical(self, "Error", f"Failed to load project:\n{e}")
 
     def _on_project_loaded(self) -> None:
         """Handle successful project load."""
@@ -643,7 +643,7 @@ class MainWindow(QMainWindow):
         # Setup filter bar
         mask_classes = self.app.get_mask_classes()
         if mask_classes:
-            filter_options = [(None, "Todos")]
+            filter_options = [(None, "All")]
             for cls in mask_classes:
                 display_name = cls.replace("_", " ").title()
                 filter_options.append((cls, display_name))
@@ -706,7 +706,7 @@ class MainWindow(QMainWindow):
     def _on_model_trained(self, model_info) -> None:
         """Handle model training completion."""
         self._status_bar.show_message(
-            f"Modelo '{model_info.name}' treinado - Acc: {model_info.val_accuracy*100:.1f}%",
+            f"Model '{model_info.name}' trained - Acc: {model_info.val_accuracy*100:.1f}%",
             5000
         )
         # Predictions need to be regenerated after new training
@@ -729,7 +729,7 @@ class MainWindow(QMainWindow):
             self._on_coordinates_changed
         )
         self._navigation_controller.no_samples_available.connect(
-            lambda: self._status_bar.show_message("Nenhuma amostra disponivel", 3000)
+            lambda: self._status_bar.show_message("No samples available", 3000)
         )
         self._visualization_controller.visualization_changed.connect(
             self._on_visualization_data_changed
@@ -869,7 +869,7 @@ class MainWindow(QMainWindow):
             self._review_filter_bar.set_progress(0, 0)
             self._nav_bar.set_navigation_enabled(False, False)
             self._prediction_info_bar.clear()
-            self._status_bar.show_message("Nenhuma amostra encontrada", 2000)
+            self._status_bar.show_message("No samples found", 2000)
             return
 
         if self._review_index >= total:
@@ -886,7 +886,7 @@ class MainWindow(QMainWindow):
             self.app._load_sample(coords)
             self._coords_label.setText(f"X: {coords.x}  Y: {coords.y}")
         else:
-            self._coords_label.setText("Sem coordenadas")
+            self._coords_label.setText("No coordinates")
             self.app._current_coords = None
             self.app._current_timeseries = sample.timeseries
 
@@ -948,7 +948,7 @@ class MainWindow(QMainWindow):
             self.app.discard_pending()
             self._class_panel.clear_selection()
             self._class_panel.decrement_count(class_name)
-            self._status_bar.show_message("Anotacao removida", 1500)
+            self._status_bar.show_message("Annotation removed", 1500)
             coords = self.app.get_current_coordinates()
             if coords:
                 self._minimap.remove_explored_point(coords)
@@ -961,7 +961,7 @@ class MainWindow(QMainWindow):
         if self._annotation_controller.annotate(class_name):
             self._class_panel.set_selected_class(class_name)
             self._class_panel.increment_count(class_name)
-            self._status_bar.show_message(f"Anotado: {class_name}", 1500)
+            self._status_bar.show_message(f"Annotated: {class_name}", 1500)
 
             coords = self.app.get_current_coordinates()
             if coords:
@@ -980,7 +980,7 @@ class MainWindow(QMainWindow):
         if self._annotation_controller.mark_dont_know():
             self._class_panel.set_selected_class("dont_know")
             self._class_panel.increment_count("dont_know")
-            self._status_bar.show_message("Marcado: nao sei", 1500)
+            self._status_bar.show_message("Marked: don't know", 1500)
 
             coords = self.app.get_current_coordinates()
             if coords:
@@ -999,7 +999,7 @@ class MainWindow(QMainWindow):
         if self._annotation_controller.skip():
             self._class_panel.set_selected_class("skip")
             self._class_panel.increment_count("skip")
-            self._status_bar.show_message("Pulado", 1500)
+            self._status_bar.show_message("Skipped", 1500)
 
             coords = self.app.get_current_coordinates()
             if coords:
@@ -1012,14 +1012,14 @@ class MainWindow(QMainWindow):
             return
 
         if self.app.remove_annotation(coords.x, coords.y):
-            self._status_bar.show_message("Anotacao removida", 2000)
+            self._status_bar.show_message("Annotation removed", 2000)
             self._minimap.remove_explored_point(coords)
             self._update_statistics()
 
     def _on_delete_annotation(self) -> None:
         """Delete annotation in review mode."""
         if self.app.delete_current_annotation():
-            self._status_bar.show_message("Anotacao excluida", 2000)
+            self._status_bar.show_message("Annotation deleted", 2000)
 
             coords = self.app.get_current_coordinates()
             if coords:
@@ -1052,7 +1052,7 @@ class MainWindow(QMainWindow):
         # Use reclassify_annotation for proper handling
         if self.app.reclassify_annotation(coords.x, coords.y, new_class):
             self._class_panel.set_selected_class(new_class)
-            self._status_bar.show_message(f"Reclassificado: {new_class}", 2000)
+            self._status_bar.show_message(f"Reclassified: {new_class}", 2000)
             self._update_statistics()
 
             # Refresh review samples if in review mode
@@ -1081,8 +1081,8 @@ class MainWindow(QMainWindow):
         """Handle mask filter change."""
         if self._navigation_controller:
             self._navigation_controller.set_mask_filter(class_name)
-            filter_text = class_name if class_name else "Todos"
-            self._status_bar.show_message(f"Filtro: {filter_text}", 2000)
+            filter_text = class_name if class_name else "All"
+            self._status_bar.show_message(f"Filter: {filter_text}", 2000)
 
     def _on_order_changed(self, order: str) -> None:
         """Handle ordering strategy change."""
@@ -1091,13 +1091,13 @@ class MainWindow(QMainWindow):
 
         if self.app.set_strategy(strategy):
             order_names = {
-                "random": "Aleatorio",
+                "random": "Random",
                 "grid": "Grid",
-                "uncertainty": "Incerteza",
-                "confusion": "Confusão",
+                "uncertainty": "Uncertainty",
+                "confusion": "Confusion",
             }
             order_name = order_names.get(order, order)
-            self._status_bar.show_message(f"Ordenação: {order_name}", 2000)
+            self._status_bar.show_message(f"Order: {order_name}", 2000)
 
     def _on_metric_changed(self, metric: str) -> None:
         """Handle uncertainty metric change."""
@@ -1113,8 +1113,8 @@ class MainWindow(QMainWindow):
             }
             if metric in metric_map:
                 sampler.set_metric(metric_map[metric])
-                metric_names = {"confidence": "Confianca", "entropy": "Entropia", "margin": "Margem"}
-                self._status_bar.show_message(f"Metrica: {metric_names[metric]}", 2000)
+                metric_names = {"confidence": "Confidence", "entropy": "Entropy", "margin": "Margin"}
+                self._status_bar.show_message(f"Metric: {metric_names[metric]}", 2000)
 
     def _on_class_filter_changed(self, class_name: str | None) -> None:
         """Handle predicted class filter change."""
@@ -1122,8 +1122,8 @@ class MainWindow(QMainWindow):
         if "uncertainty" in self.app._available_samplers:
             sampler = self.app._available_samplers["uncertainty"]
             sampler.set_class_filter(class_name)
-            filter_text = class_name if class_name else "Todas"
-            self._status_bar.show_message(f"Classe: {filter_text}", 2000)
+            filter_text = class_name if class_name else "All"
+            self._status_bar.show_message(f"Class: {filter_text}", 2000)
 
     def _on_confidence_range_changed(self, min_value: float, max_value: float) -> None:
         """Handle confidence range change."""
@@ -1131,7 +1131,7 @@ class MainWindow(QMainWindow):
         if "uncertainty" in self.app._available_samplers:
             sampler = self.app._available_samplers["uncertainty"]
             sampler.set_confidence_range(min_value, max_value)
-            self._status_bar.show_message(f"Confiança: {min_value:.0%} - {max_value:.0%}", 2000)
+            self._status_bar.show_message(f"Confidence: {min_value:.0%} - {max_value:.0%}", 2000)
 
     def _on_confusion_pair_changed(self, class_a: str | None, class_b: str | None) -> None:
         """Handle confusion pair filter change."""
@@ -1140,11 +1140,11 @@ class MainWindow(QMainWindow):
             sampler = self.app._available_samplers["uncertainty"]
             sampler.set_confusion_pair(class_a, class_b)
             if class_a and class_b:
-                self._status_bar.show_message(f"Confusão: {class_a} ↔ {class_b}", 2000)
+                self._status_bar.show_message(f"Confusion: {class_a} ↔ {class_b}", 2000)
                 # Update pixel count
                 self._update_confusion_pixel_count()
             else:
-                self._status_bar.show_message("Confusão: Todas", 2000)
+                self._status_bar.show_message("Confusion: All", 2000)
                 self._filter_bar.update_confusion_pixel_count(0)
 
     def _on_confusion_gap_changed(self, max_gap: float) -> None:
@@ -1174,7 +1174,7 @@ class MainWindow(QMainWindow):
         prediction_folder = self.app.helper_model_service.get_prediction_folder()
         self._setup_uncertainty_sampler(prediction_folder)
 
-        self._status_bar.show_message("Classificacao concluida!", 3000)
+        self._status_bar.show_message("Classification completed!", 3000)
 
     def _setup_uncertainty_sampler(self, prediction_folder) -> None:
         """Set up the uncertainty sampler with prediction maps."""
@@ -1231,7 +1231,7 @@ class MainWindow(QMainWindow):
             self._coords_label.setText(f"X: {coords.x}  Y: {coords.y}")
         else:
             self._minimap.set_current_position(None)
-            self._coords_label.setText("Sem coordenadas")
+            self._coords_label.setText("No coordinates")
 
         if self._visualization_controller and timeseries:
             self._visualization_controller.update_from_timeseries(timeseries)
@@ -1282,7 +1282,7 @@ class MainWindow(QMainWindow):
         """Toggle similarity display."""
         if not self.app.has_enough_similarity_samples():
             self._status_bar.show_message(
-                "Poucas amostras para calcular similaridade (min: 3 por classe)", 3000
+                "Too few samples to compute similarity (min: 3 per class)", 3000
             )
             return
 
@@ -1290,7 +1290,7 @@ class MainWindow(QMainWindow):
 
         if is_visible:
             self._update_similarity_scores()
-            self._status_bar.show_message("Similaridade: ON [S] para desligar", 2000)
+            self._status_bar.show_message("Similarity: ON [S] to turn off", 2000)
         else:
             self._class_panel.clear_similarity_scores()
             self._status_bar.show_message("Similaridade: OFF", 2000)
@@ -1348,7 +1348,7 @@ class MainWindow(QMainWindow):
             self._model_review_panel.set_progress(0, 0)
             self._model_review_panel.set_navigation_enabled(False, False)
             self._model_review_panel.set_prediction(None)
-            self._status_bar.show_message("Nenhuma amostra para revisar", 2000)
+            self._status_bar.show_message("No samples to review", 2000)
             return
 
         # Clamp index
@@ -1368,7 +1368,7 @@ class MainWindow(QMainWindow):
             self._coords_label.setText(f"X: {coords.x}  Y: {coords.y}")
         else:
             self._minimap.set_current_position(None)
-            self._coords_label.setText("Sem coordenadas")
+            self._coords_label.setText("No coordinates")
 
         # Update plot via visualization controller
         if sample.timeseries and self._visualization_controller:
@@ -1420,11 +1420,11 @@ class MainWindow(QMainWindow):
         self._load_model_review_sample()
 
         filter_names = {
-            "all": "Todos",
-            "disagreement": "Discordantes",
-            "low_confidence": "Baixa confianca",
+            "all": "All",
+            "disagreement": "Disagreements",
+            "low_confidence": "Low confidence",
         }
-        self._status_bar.show_message(f"Filtro: {filter_names[self._model_review_filter]}", 2000)
+        self._status_bar.show_message(f"Filter: {filter_names[self._model_review_filter]}", 2000)
 
     def _on_model_review_sort_changed(self, sort_order: ReviewSortOrder) -> None:
         """Handle sort change in model review."""
@@ -1440,33 +1440,33 @@ class MainWindow(QMainWindow):
 
     def _on_model_review_keep(self) -> None:
         """Keep current annotation and move to next."""
-        self._status_bar.show_message("Anotacao mantida", 1500)
+        self._status_bar.show_message("Annotation kept", 1500)
         self._on_model_review_next()
 
     def _on_model_review_accept(self) -> None:
         """Accept model prediction and move to next."""
         if self.app.accept_model_prediction():
-            self._status_bar.show_message("Corrigido para predicao do modelo", 2000)
+            self._status_bar.show_message("Corrected to model prediction", 2000)
             self._update_statistics()
 
             # Refresh samples and reload
             self._refresh_model_review_samples()
             self._load_model_review_sample()
         else:
-            self._status_bar.show_message("Erro ao aceitar predicao", 2000)
+            self._status_bar.show_message("Error accepting prediction", 2000)
 
     def _on_model_review_reclassify(self, new_class: str) -> None:
         """Reclassify current sample to specific class."""
         coords = self.app.get_current_coordinates()
         if coords and self.app.reclassify_annotation(coords.x, coords.y, new_class):
-            self._status_bar.show_message(f"Reclassificado: {new_class}", 2000)
+            self._status_bar.show_message(f"Reclassified: {new_class}", 2000)
             self._update_statistics()
 
             # Refresh samples and reload
             self._refresh_model_review_samples()
             self._load_model_review_sample()
         else:
-            self._status_bar.show_message("Erro ao reclassificar", 2000)
+            self._status_bar.show_message("Error reclassifying", 2000)
 
     # =========================================================================
     # Help Actions
@@ -1489,10 +1489,10 @@ class MainWindow(QMainWindow):
         """Show about dialog."""
         QMessageBox.about(
             self,
-            "Sobre SITS Annotator",
+            "About SITS Annotator",
             "SITS Annotator v0.1.0\n\n"
-            "Ferramenta para anotacao de series temporais\n"
-            "em imagens de sensoriamento remoto.",
+            "Tool for annotating time series\n"
+            "in remote sensing images.",
         )
 
     # =========================================================================

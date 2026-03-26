@@ -42,7 +42,7 @@ class NavigationController(QObject):
             True if navigation was successful.
         """
         if not self._app.is_project_loaded:
-            self.error_occurred.emit("Nenhum projeto carregado")
+            self.error_occurred.emit("No project loaded")
             return False
 
         # Commit any pending annotation before navigating
@@ -68,7 +68,7 @@ class NavigationController(QObject):
             True if navigation was successful.
         """
         if not self._app.is_project_loaded:
-            self.error_occurred.emit("Nenhum projeto carregado")
+            self.error_occurred.emit("No project loaded")
             return False
 
         # Commit any pending annotation before navigating
@@ -93,7 +93,7 @@ class NavigationController(QObject):
             True if navigation was successful.
         """
         if not self._app.is_project_loaded:
-            self.error_occurred.emit("Nenhum projeto carregado")
+            self.error_occurred.emit("No project loaded")
             return False
 
         # Commit any pending annotation before navigating
@@ -122,7 +122,7 @@ class NavigationController(QObject):
             True if navigation was successful.
         """
         if not self._app.is_project_loaded:
-            self.error_occurred.emit("Nenhum projeto carregado")
+            self.error_occurred.emit("No project loaded")
             return False
 
         # Commit any pending annotation before navigating
@@ -137,7 +137,7 @@ class NavigationController(QObject):
             logger.debug(f"Navigated to: ({x}, {y})")
             return True
         else:
-            self.error_occurred.emit(f"Coordenadas invalidas: ({x}, {y})")
+            self.error_occurred.emit(f"Invalid coordinates: ({x}, {y})")
             return False
 
     def set_mask_filter(self, class_name: str | None) -> None:

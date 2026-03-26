@@ -26,7 +26,7 @@ class ReviewFilterBar(QWidget):
         layout.setSpacing(12)
 
         # Class filter
-        class_label = QLabel("Classe:")
+        class_label = QLabel("Class:")
         class_label.setStyleSheet("color: #888888; font-size: 11px;")
         layout.addWidget(class_label)
 
@@ -37,36 +37,36 @@ class ReviewFilterBar(QWidget):
         layout.addWidget(self._class_combo)
 
         # Confidence filter
-        conf_label = QLabel("Confianca:")
+        conf_label = QLabel("Confidence:")
         conf_label.setStyleSheet("color: #888888; font-size: 11px;")
         layout.addWidget(conf_label)
 
         self._conf_combo = QComboBox()
         self._conf_combo.setFixedWidth(120)
         self._conf_combo.setFixedHeight(26)
-        self._conf_combo.addItem("Todas", None)
-        self._conf_combo.addItem("Alta (>80%)", "high")
-        self._conf_combo.addItem("Media (50-80%)", "medium")
-        self._conf_combo.addItem("Baixa (<50%)", "low")
+        self._conf_combo.addItem("All", None)
+        self._conf_combo.addItem("High (>80%)", "high")
+        self._conf_combo.addItem("Medium (50-80%)", "medium")
+        self._conf_combo.addItem("Low (<50%)", "low")
         self._conf_combo.currentIndexChanged.connect(self._on_filter_changed)
         layout.addWidget(self._conf_combo)
 
         # Error filter
-        error_label = QLabel("Erro:")
+        error_label = QLabel("Error:")
         error_label.setStyleSheet("color: #888888; font-size: 11px;")
         layout.addWidget(error_label)
 
         self._error_combo = QComboBox()
         self._error_combo.setFixedWidth(110)
         self._error_combo.setFixedHeight(26)
-        self._error_combo.addItem("Todas", None)
-        self._error_combo.addItem("Corretas", "correct")
-        self._error_combo.addItem("Erradas", "error")
+        self._error_combo.addItem("All", None)
+        self._error_combo.addItem("Correct", "correct")
+        self._error_combo.addItem("Wrong", "error")
         self._error_combo.currentIndexChanged.connect(self._on_filter_changed)
         layout.addWidget(self._error_combo)
 
         # Order
-        order_label = QLabel("Ordem:")
+        order_label = QLabel("Order:")
         order_label.setStyleSheet("color: #888888; font-size: 11px;")
         layout.addWidget(order_label)
 
@@ -74,10 +74,10 @@ class ReviewFilterBar(QWidget):
         self._order_combo.setFixedWidth(160)
         self._order_combo.setFixedHeight(26)
         self._order_combo.addItem("Original", "original")
-        self._order_combo.addItem("Confianca asc", "confidence_asc")
-        self._order_combo.addItem("Confianca desc", "confidence_desc")
-        self._order_combo.addItem("Mais suspeitos", "label_quality_asc")
-        self._order_combo.addItem("Menos suspeitos", "label_quality_desc")
+        self._order_combo.addItem("Confidence asc", "confidence_asc")
+        self._order_combo.addItem("Confidence desc", "confidence_desc")
+        self._order_combo.addItem("Most suspicious", "label_quality_asc")
+        self._order_combo.addItem("Least suspicious", "label_quality_desc")
         self._order_combo.currentIndexChanged.connect(self._on_filter_changed)
         layout.addWidget(self._order_combo)
 
@@ -160,7 +160,7 @@ class ReviewFilterBar(QWidget):
         """Set available classes for filter."""
         self._class_combo.blockSignals(True)
         self._class_combo.clear()
-        self._class_combo.addItem("Todas", None)
+        self._class_combo.addItem("All", None)
         for name in class_names:
             display = name.replace("_", " ").title()
             self._class_combo.addItem(display, name)
@@ -195,14 +195,14 @@ class ReviewFilterBar(QWidget):
         """Update statistics display."""
         parts = []
         if error_count > 0:
-            parts.append(f"{error_count} erros ({error_pct:.0f}%)")
+            parts.append(f"{error_count} errors ({error_pct:.0f}%)")
         if low_conf_count > 0:
-            parts.append(f"{low_conf_count} baixa conf.")
+            parts.append(f"{low_conf_count} low conf.")
 
         if parts:
             self._stats_label.setText("  •  ".join(parts))
         else:
-            self._stats_label.setText("Todas corretas")
+            self._stats_label.setText("All correct")
 
     def update_filter_counts(self, class_counts: dict[str, int],
                               conf_counts: dict[str, int],
@@ -214,7 +214,7 @@ class ReviewFilterBar(QWidget):
         self._class_combo.clear()
 
         total = sum(class_counts.values())
-        self._class_combo.addItem(f"Todas ({total})", None)
+        self._class_combo.addItem(f"All ({total})", None)
 
         for name, count in class_counts.items():
             display = name.replace("_", " ").title()
@@ -233,15 +233,15 @@ class ReviewFilterBar(QWidget):
         self._conf_combo.clear()
 
         total_conf = sum(conf_counts.values())
-        self._conf_combo.addItem(f"Todas ({total_conf})", None)
+        self._conf_combo.addItem(f"All ({total_conf})", None)
 
         high = conf_counts.get("high", 0)
         medium = conf_counts.get("medium", 0)
         low = conf_counts.get("low", 0)
 
-        self._conf_combo.addItem(f"Alta >80% ({high})", "high")
-        self._conf_combo.addItem(f"Media 50-80% ({medium})", "medium")
-        self._conf_combo.addItem(f"Baixa <50% ({low})", "low")
+        self._conf_combo.addItem(f"High >80% ({high})", "high")
+        self._conf_combo.addItem(f"Medium 50-80% ({medium})", "medium")
+        self._conf_combo.addItem(f"Low <50% ({low})", "low")
 
         # Restore selection
         for i in range(self._conf_combo.count()):
@@ -259,9 +259,9 @@ class ReviewFilterBar(QWidget):
         correct = error_counts.get("correct", 0)
         error = error_counts.get("error", 0)
 
-        self._error_combo.addItem(f"Todas ({total_err})", None)
-        self._error_combo.addItem(f"Corretas ({correct})", "correct")
-        self._error_combo.addItem(f"Erradas ({error})", "error")
+        self._error_combo.addItem(f"All ({total_err})", None)
+        self._error_combo.addItem(f"Correct ({correct})", "correct")
+        self._error_combo.addItem(f"Wrong ({error})", "error")
 
         # Restore selection
         for i in range(self._error_combo.count()):
@@ -277,7 +277,7 @@ class ReviewFilterBar(QWidget):
             widget = self.layout().itemAt(i).widget()
             if widget and isinstance(widget, QLabel):
                 text = widget.text()
-                if text in ("Confianca:", "Erro:", "Ordem:"):
+                if text in ("Confidence:", "Error:", "Order:"):
                     widget.setVisible(visible)
 
         self._conf_combo.setVisible(visible)

@@ -83,7 +83,7 @@ class ModelReviewPanel(QWidget):
         row1.setSpacing(8)
 
         # Filter
-        filter_label = QLabel("Filtro:")
+        filter_label = QLabel("Filter:")
         filter_label.setStyleSheet("color: #888888; font-size: 11px;")
         row1.addWidget(filter_label)
 
@@ -91,14 +91,14 @@ class ModelReviewPanel(QWidget):
         self._filter_combo.setFixedWidth(140)
         self._filter_combo.setFixedHeight(28)
         self._filter_combo.setStyleSheet(self._combo_style())
-        self._filter_combo.addItem("Todos", ReviewFilter.ALL)
-        self._filter_combo.addItem("Discordantes", ReviewFilter.DISAGREEMENT)
-        self._filter_combo.addItem("Baixa Confianca", ReviewFilter.LOW_CONFIDENCE)
+        self._filter_combo.addItem("All", ReviewFilter.ALL)
+        self._filter_combo.addItem("Disagreements", ReviewFilter.DISAGREEMENT)
+        self._filter_combo.addItem("Low Confidence", ReviewFilter.LOW_CONFIDENCE)
         self._filter_combo.currentIndexChanged.connect(self._on_filter_changed)
         row1.addWidget(self._filter_combo)
 
         # Sort
-        sort_label = QLabel("Ordem:")
+        sort_label = QLabel("Order:")
         sort_label.setStyleSheet("color: #888888; font-size: 11px;")
         row1.addWidget(sort_label)
 
@@ -106,9 +106,9 @@ class ModelReviewPanel(QWidget):
         self._sort_combo.setFixedWidth(140)
         self._sort_combo.setFixedHeight(28)
         self._sort_combo.setStyleSheet(self._combo_style())
-        self._sort_combo.addItem("Confianca (asc)", ReviewSortOrder.CONFIDENCE_ASC)
-        self._sort_combo.addItem("Margem (asc)", ReviewSortOrder.MARGIN_ASC)
-        self._sort_combo.addItem("Aleatorio", ReviewSortOrder.RANDOM)
+        self._sort_combo.addItem("Confidence (asc)", ReviewSortOrder.CONFIDENCE_ASC)
+        self._sort_combo.addItem("Margin (asc)", ReviewSortOrder.MARGIN_ASC)
+        self._sort_combo.addItem("Random", ReviewSortOrder.RANDOM)
         self._sort_combo.currentIndexChanged.connect(self._on_sort_changed)
         row1.addWidget(self._sort_combo)
 
@@ -144,11 +144,11 @@ class ModelReviewPanel(QWidget):
         row1.addWidget(sep2)
 
         # Navigation
-        self._prev_btn = self._create_button("Ant [A]")
+        self._prev_btn = self._create_button("Prev [A]")
         self._prev_btn.clicked.connect(self.previous_clicked)
         row1.addWidget(self._prev_btn)
 
-        self._next_btn = self._create_button("Prox [D]", primary=True)
+        self._next_btn = self._create_button("Next [D]", primary=True)
         self._next_btn.clicked.connect(self.next_clicked)
         row1.addWidget(self._next_btn)
 
@@ -162,7 +162,7 @@ class ModelReviewPanel(QWidget):
         # Annotated class
         annotated_box = QVBoxLayout()
         annotated_box.setSpacing(2)
-        annotated_title = QLabel("Anotado:")
+        annotated_title = QLabel("Annotated:")
         annotated_title.setStyleSheet("color: #888888; font-size: 10px;")
         annotated_box.addWidget(annotated_title)
         self._annotated_label = QLabel("-")
@@ -178,7 +178,7 @@ class ModelReviewPanel(QWidget):
         # Predicted class
         predicted_box = QVBoxLayout()
         predicted_box.setSpacing(2)
-        predicted_title = QLabel("Predito:")
+        predicted_title = QLabel("Predicted:")
         predicted_title.setStyleSheet("color: #888888; font-size: 10px;")
         predicted_box.addWidget(predicted_title)
         self._predicted_label = QLabel("-")
@@ -189,7 +189,7 @@ class ModelReviewPanel(QWidget):
         # Confidence
         conf_box = QVBoxLayout()
         conf_box.setSpacing(2)
-        conf_title = QLabel("Confianca:")
+        conf_title = QLabel("Confidence:")
         conf_title.setStyleSheet("color: #888888; font-size: 10px;")
         conf_box.addWidget(conf_title)
         self._confidence_label = QLabel("-")
@@ -228,20 +228,20 @@ class ModelReviewPanel(QWidget):
         row4 = QHBoxLayout()
         row4.setSpacing(8)
 
-        self._keep_btn = QPushButton("Manter Anotacao [M]")
+        self._keep_btn = QPushButton("Keep Annotation [M]")
         self._keep_btn.setFixedHeight(32)
         self._keep_btn.setStyleSheet(self._action_button_style("#2d5a2d", "#3d7a3d"))
         self._keep_btn.clicked.connect(self.keep_annotation_clicked)
         row4.addWidget(self._keep_btn)
 
-        self._accept_btn = QPushButton("Aceitar Predicao [P]")
+        self._accept_btn = QPushButton("Accept Prediction [P]")
         self._accept_btn.setFixedHeight(32)
         self._accept_btn.setStyleSheet(self._action_button_style("#1a5276", "#2471a3"))
         self._accept_btn.clicked.connect(self.accept_prediction_clicked)
         row4.addWidget(self._accept_btn)
 
         # Reclassify dropdown
-        reclassify_label = QLabel("Mudar para:")
+        reclassify_label = QLabel("Change to:")
         reclassify_label.setStyleSheet("color: #888888; font-size: 11px;")
         row4.addWidget(reclassify_label)
 
@@ -398,7 +398,7 @@ class ModelReviewPanel(QWidget):
         """Set available class options for reclassify dropdown."""
         self._reclassify_combo.blockSignals(True)
         self._reclassify_combo.clear()
-        self._reclassify_combo.addItem("Selecionar...", None)
+        self._reclassify_combo.addItem("Select...", None)
         for name in class_names:
             display_name = name.replace("_", " ").title()
             self._reclassify_combo.addItem(display_name, name)
@@ -452,7 +452,7 @@ class ModelReviewPanel(QWidget):
 
         # Status indicator
         if prediction.is_disagreement:
-            self._status_label.setText("DISCORDANTE")
+            self._status_label.setText("DISAGREEMENT")
             self._status_label.setStyleSheet(
                 "color: #ff6b6b; font-size: 12px; font-weight: bold; "
                 "background-color: #5a1d1d; padding: 4px 8px; border-radius: 4px;"

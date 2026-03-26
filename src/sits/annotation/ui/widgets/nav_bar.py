@@ -13,7 +13,7 @@ class NavBar(QWidget):
     """
     Bottom navigation bar with arrow buttons.
 
-    Shows: [<-] [progress] [->] | Ir para
+    Shows: [<-] [progress] [->] | Go to
     """
 
     previous_clicked = pyqtSignal()
@@ -39,7 +39,7 @@ class NavBar(QWidget):
         self._prev_btn.setFixedSize(40, 32)
         self._prev_btn.setStyleSheet(self._btn_style())
         self._prev_btn.clicked.connect(self.previous_clicked)
-        self._prev_btn.setToolTip("Anterior [Left]")
+        self._prev_btn.setToolTip("Previous [Left]")
         layout.addWidget(self._prev_btn)
 
         # Progress label (review mode only)
@@ -66,7 +66,7 @@ class NavBar(QWidget):
         self._next_btn.setFixedSize(40, 32)
         self._next_btn.setStyleSheet(self._btn_style(primary=True))
         self._next_btn.clicked.connect(self.next_clicked)
-        self._next_btn.setToolTip("Proxima amostra [Right/Space]")
+        self._next_btn.setToolTip("Next sample [Right/Space]")
         layout.addWidget(self._next_btn)
 
         # Separator
@@ -75,11 +75,11 @@ class NavBar(QWidget):
         layout.addWidget(self._sep)
 
         # Goto button
-        self._goto_btn = QPushButton("Ir para")
+        self._goto_btn = QPushButton("Go to")
         self._goto_btn.setFixedHeight(32)
         self._goto_btn.setStyleSheet(self._btn_style())
         self._goto_btn.clicked.connect(self.goto_clicked)
-        self._goto_btn.setToolTip("Ir para coordenada [G]")
+        self._goto_btn.setToolTip("Go to coordinate [G]")
         layout.addWidget(self._goto_btn)
 
         layout.addStretch()

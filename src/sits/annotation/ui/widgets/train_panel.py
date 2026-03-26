@@ -233,7 +233,7 @@ class TrainPanel(QWidget):
         layout.setSpacing(16)
 
         # Saved Models Section
-        models_group = QGroupBox("Modelos Salvos")
+        models_group = QGroupBox("Saved Models")
         models_layout = QVBoxLayout(models_group)
 
         self._models_list = QListWidget()
@@ -242,17 +242,17 @@ class TrainPanel(QWidget):
         models_layout.addWidget(self._models_list)
 
         models_buttons = QHBoxLayout()
-        self._use_btn = QPushButton("Usar Selecionado")
+        self._use_btn = QPushButton("Use Selected")
         self._use_btn.clicked.connect(self._on_use_model)
         self._use_btn.setEnabled(False)
         models_buttons.addWidget(self._use_btn)
 
-        self._compare_btn = QPushButton("Comparar")
+        self._compare_btn = QPushButton("Compare")
         self._compare_btn.clicked.connect(self._on_compare_models)
         self._compare_btn.setEnabled(False)
         models_buttons.addWidget(self._compare_btn)
 
-        self._delete_btn = QPushButton("Deletar")
+        self._delete_btn = QPushButton("Delete")
         self._delete_btn.clicked.connect(self._on_delete_model)
         self._delete_btn.setEnabled(False)
         models_buttons.addWidget(self._delete_btn)
@@ -262,8 +262,8 @@ class TrainPanel(QWidget):
 
         # Classify image button
         classify_row = QHBoxLayout()
-        self._classify_btn = QPushButton("Classificar Imagem")
-        self._classify_btn.setToolTip("Classificar todos os pixels para habilitar ordenacao por incerteza")
+        self._classify_btn = QPushButton("Classify Image")
+        self._classify_btn.setToolTip("Classify all pixels to enable uncertainty ordering")
         self._classify_btn.clicked.connect(self._on_classify_image)
         self._classify_btn.setEnabled(False)
         classify_row.addWidget(self._classify_btn)
@@ -296,13 +296,13 @@ class TrainPanel(QWidget):
         layout.addWidget(models_group)
 
         # Training Configuration Section
-        config_group = QGroupBox("Treinar Novo Modelo")
+        config_group = QGroupBox("Train New Model")
         config_layout = QVBoxLayout(config_group)
         config_layout.setSpacing(12)
 
         # Line 1: Model selection
         model_row = QHBoxLayout()
-        model_label = QLabel("Modelo")
+        model_label = QLabel("Model")
         model_label.setStyleSheet("color: #888888; font-size: 11px;")
         model_row.addWidget(model_label)
         self._model_combo = QComboBox()
@@ -324,7 +324,7 @@ class TrainPanel(QWidget):
         # Epochs
         epochs_container = QVBoxLayout()
         epochs_container.setSpacing(2)
-        epochs_label = QLabel("Épocas")
+        epochs_label = QLabel("Epochs")
         epochs_label.setStyleSheet("color: #888888; font-size: 11px;")
         epochs_container.addWidget(epochs_label)
         self._epochs_spin = QSpinBox()
@@ -391,7 +391,7 @@ class TrainPanel(QWidget):
         self._train_pct_label.setStyleSheet("color: #4ec9b0; font-weight: bold; min-width: 35px;")
         split_row.addWidget(self._train_pct_label)
 
-        train_label = QLabel("treino")
+        train_label = QLabel("train")
         train_label.setStyleSheet("color: #888888; font-size: 11px;")
         split_row.addWidget(train_label)
 
@@ -419,9 +419,9 @@ class TrainPanel(QWidget):
         split_row.addWidget(sep)
 
         # Stratified checkbox
-        self._stratified_check = QCheckBox("Estratificado")
+        self._stratified_check = QCheckBox("Stratified")
         self._stratified_check.setChecked(True)
-        self._stratified_check.setToolTip("Manter proporção de classes no treino e validação")
+        self._stratified_check.setToolTip("Keep class proportion in train and validation sets")
         split_row.addWidget(self._stratified_check)
 
         split_row.addStretch()
@@ -434,8 +434,8 @@ class TrainPanel(QWidget):
         self._kfold_check = QCheckBox("K-Fold Cross-Validation")
         self._kfold_check.setChecked(False)
         self._kfold_check.setToolTip(
-            "Treina com validação cruzada para análise de erros (Cleanlab).\n"
-            "Gera predições out-of-sample para identificar rótulos suspeitos."
+            "Trains with cross-validation for error analysis (Cleanlab).\n"
+            "Generates out-of-sample predictions to identify suspicious labels."
         )
         self._kfold_check.stateChanged.connect(self._on_kfold_toggled)
         kfold_row.addWidget(self._kfold_check)
@@ -452,7 +452,7 @@ class TrainPanel(QWidget):
         self._nfolds_spin.setValue(5)
         self._nfolds_spin.setMinimumWidth(50)
         self._nfolds_spin.setVisible(False)
-        self._nfolds_spin.setToolTip("Número de folds (5 é comum)")
+        self._nfolds_spin.setToolTip("Number of folds (5 is common)")
         kfold_row.addWidget(self._nfolds_spin)
 
         self._kfold_info = QLabel("")
@@ -468,7 +468,7 @@ class TrainPanel(QWidget):
         self._samples_label = QLabel("--")
         self._samples_label.setStyleSheet("color: #4ec9b0; font-weight: bold;")
         data_row.addWidget(self._samples_label)
-        data_row.addWidget(QLabel("amostras"))
+        data_row.addWidget(QLabel("samples"))
 
         data_row.addSpacing(16)
 
@@ -484,14 +484,14 @@ class TrainPanel(QWidget):
         buttons_row = QHBoxLayout()
         buttons_row.setSpacing(8)
 
-        self._train_btn = QPushButton("Treinar Modelo")
+        self._train_btn = QPushButton("Train Model")
         self._train_btn.setMinimumWidth(140)
         self._train_btn.setMinimumHeight(36)
         self._train_btn.clicked.connect(self._on_train)
         self._train_btn.setObjectName("primaryButton")
         buttons_row.addWidget(self._train_btn)
 
-        self._stop_btn = QPushButton("Parar")
+        self._stop_btn = QPushButton("Stop")
         self._stop_btn.setMinimumWidth(80)
         self._stop_btn.setMinimumHeight(36)
         self._stop_btn.clicked.connect(self._on_stop)
@@ -505,11 +505,11 @@ class TrainPanel(QWidget):
         layout.addWidget(config_group)
 
         # Progress Section
-        progress_group = QGroupBox("Progresso")
+        progress_group = QGroupBox("Progress")
         progress_layout = QVBoxLayout(progress_group)
 
         progress_row = QHBoxLayout()
-        self._epoch_label = QLabel("Época: --/--")
+        self._epoch_label = QLabel("Epoch: --/--")
         progress_row.addWidget(self._epoch_label)
         self._progress_bar = QProgressBar()
         self._progress_bar.setTextVisible(True)
@@ -517,7 +517,7 @@ class TrainPanel(QWidget):
         progress_layout.addLayout(progress_row)
 
         metrics_row = QHBoxLayout()
-        self._train_metrics_label = QLabel("Loss treino: -- | Acc treino: --")
+        self._train_metrics_label = QLabel("Train loss: -- | Train acc: --")
         metrics_row.addWidget(self._train_metrics_label)
         self._val_metrics_label = QLabel("Loss val: -- | Acc val: --")
         metrics_row.addWidget(self._val_metrics_label)
@@ -527,7 +527,7 @@ class TrainPanel(QWidget):
         layout.addWidget(progress_group)
 
         # Results Section
-        results_group = QGroupBox("Resultado (melhor época)")
+        results_group = QGroupBox("Result (best epoch)")
         results_layout = QVBoxLayout(results_group)
 
         self._result_label = QLabel("--")
@@ -722,10 +722,10 @@ class TrainPanel(QWidget):
         self._val_pct_label.setEnabled(not is_kfold)
 
         if is_kfold:
-            self._kfold_info.setText("+ Cleanlab para análise de erros")
-            self._train_btn.setText("Treinar K-Fold")
+            self._kfold_info.setText("+ Cleanlab for error analysis")
+            self._train_btn.setText("Train K-Fold")
         else:
-            self._train_btn.setText("Treinar Modelo")
+            self._train_btn.setText("Train Model")
 
     def set_service(self, service: HelperModelService) -> None:
         """Set the helper model service."""
@@ -758,7 +758,7 @@ class TrainPanel(QWidget):
                 f"{'● ' if model.path.name == active_id else '○ '}"
                 f"{model.name}    "
                 f"{model.val_accuracy*100:.1f}%   "
-                f"{model.samples_used:,} amostras   "
+                f"{model.samples_used:,} samples   "
                 f"{model.created_at.strftime('%d/%b')}"
             )
             item = QListWidgetItem(text)
@@ -810,18 +810,18 @@ class TrainPanel(QWidget):
 
             if has_predictions:
                 msg = (
-                    f"Modelo '{model_info.name}' agora está ativo.\n"
-                    "As predições serão mostradas na aba Anotar.\n\n"
-                    "Classificação disponível - ordenação por incerteza habilitada."
+                    f"Model '{model_info.name}' is now active.\n"
+                    "Predictions will be shown in the Annotate tab.\n\n"
+                    "Classification available - uncertainty ordering enabled."
                 )
             else:
                 msg = (
-                    f"Modelo '{model_info.name}' agora está ativo.\n"
-                    "As predições serão mostradas na aba Anotar.\n\n"
-                    "Para ordenar por incerteza, clique em 'Classificar Imagem'."
+                    f"Model '{model_info.name}' is now active.\n"
+                    "Predictions will be shown in the Annotate tab.\n\n"
+                    "To order by uncertainty, click 'Classify Image'."
                 )
 
-            QMessageBox.information(self, "Modelo Ativo", msg)
+            QMessageBox.information(self, "Active Model", msg)
 
     def _on_delete_model(self) -> None:
         """Delete selected model."""
@@ -833,8 +833,8 @@ class TrainPanel(QWidget):
 
         reply = QMessageBox.question(
             self,
-            "Deletar Modelo",
-            f"Tem certeza que deseja deletar '{model_info.name}'?",
+            "Delete Model",
+            f"Are you sure you want to delete '{model_info.name}'?",
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
         )
 
@@ -846,7 +846,7 @@ class TrainPanel(QWidget):
         """Compare selected models."""
         # TODO: Implement model comparison dialog
         QMessageBox.information(
-            self, "Em breve", "Comparação de modelos será implementada em breve."
+            self, "Coming Soon", "Model comparison will be implemented soon."
         )
 
     def _on_train(self) -> None:
@@ -855,12 +855,12 @@ class TrainPanel(QWidget):
 
         if not self._service:
             logger.warning("No service set")
-            QMessageBox.warning(self, "Erro", "Servico de modelo nao configurado.")
+            QMessageBox.warning(self, "Error", "Model service is not configured.")
             return
 
         if not self._get_samples_func:
             logger.warning("No samples provider set")
-            QMessageBox.warning(self, "Erro", "Provedor de amostras nao configurado.")
+            QMessageBox.warning(self, "Error", "Sample provider is not configured.")
             return
 
         samples = self._get_samples_func()
@@ -868,8 +868,8 @@ class TrainPanel(QWidget):
         if len(samples) < 10:
             QMessageBox.warning(
                 self,
-                "Poucos dados",
-                "São necessárias pelo menos 10 amostras para treinar."
+                "Too little data",
+                "At least 10 samples are required for training."
             )
             return
 
@@ -915,7 +915,7 @@ class TrainPanel(QWidget):
             train_pct = self._split_slider.value()
             val_split = (100 - train_pct) / 100.0
             stratified = self._stratified_check.isChecked()
-            self._result_label.setText("Treinando...")
+            self._result_label.setText("Training...")
 
             self._training_worker = TrainingWorker(
                 service=self._service,
@@ -947,10 +947,10 @@ class TrainPanel(QWidget):
         """Handle training progress update."""
         pct = int(progress.epoch / progress.total_epochs * 100)
         self._progress_bar.setValue(pct)
-        self._epoch_label.setText(f"Época: {progress.epoch}/{progress.total_epochs}")
+        self._epoch_label.setText(f"Epoch: {progress.epoch}/{progress.total_epochs}")
 
         self._train_metrics_label.setText(
-            f"Loss treino: {progress.train_loss:.4f} | Acc treino: {progress.train_acc*100:.1f}%"
+            f"Train loss: {progress.train_loss:.4f} | Train acc: {progress.train_acc*100:.1f}%"
         )
 
         if progress.val_loss is not None:
@@ -965,10 +965,10 @@ class TrainPanel(QWidget):
 
         if model_info:
             self._result_label.setText(
-                f"Época {model_info.best_epoch}: "
+                f"Epoch {model_info.best_epoch}: "
                 f"Val Acc {model_info.val_accuracy*100:.1f}% | "
                 f"Val F1 {model_info.val_f1:.3f}\n"
-                f"Modelo salvo ✓"
+                f"Model saved ✓"
             )
             self._refresh_models_list()
             self._update_classify_button()
@@ -977,12 +977,12 @@ class TrainPanel(QWidget):
             # Auto-classify after training
             reply = QMessageBox.question(
                 self,
-                "Treinamento Concluído",
-                f"Modelo treinado com sucesso!\n\n"
-                f"Acurácia: {model_info.val_accuracy*100:.1f}%\n"
+                "Training Completed",
+                f"Model trained successfully!\n\n"
+                f"Accuracy: {model_info.val_accuracy*100:.1f}%\n"
                 f"F1 Score: {model_info.val_f1:.3f}\n\n"
-                "Deseja classificar a imagem agora?\n"
-                "(Necessário para ordenar por incerteza)",
+                "Do you want to classify the image now?\n"
+                "(Required to order by uncertainty)",
                 QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
                 QMessageBox.StandardButton.Yes,
             )
@@ -993,13 +993,13 @@ class TrainPanel(QWidget):
             # Reset training UI
             self._reset_training_ui()
         else:
-            self._result_label.setText("Treinamento falhou")
+            self._result_label.setText("Training failed")
 
     def _on_training_error(self, error: str) -> None:
         """Handle training error."""
         self._cleanup_training()
-        self._result_label.setText(f"Erro: {error}")
-        QMessageBox.critical(self, "Erro no Treinamento", error)
+        self._result_label.setText(f"Error: {error}")
+        QMessageBox.critical(self, "Training Error", error)
 
     def _on_kfold_progress(self, progress: dict) -> None:
         """Handle K-Fold training progress update."""
@@ -1017,7 +1017,7 @@ class TrainPanel(QWidget):
             overall_pct = int((fold_progress + epoch_progress) * 80)  # 80% for K-fold
 
             self._progress_bar.setValue(overall_pct)
-            self._epoch_label.setText(f"Fold {fold}/{total_folds} - Época {epoch}/{total_epochs}")
+            self._epoch_label.setText(f"Fold {fold}/{total_folds} - Epoch {epoch}/{total_epochs}")
 
             train_loss = progress.get("train_loss", 0)
             train_acc = progress.get("train_acc", 0)
@@ -1025,7 +1025,7 @@ class TrainPanel(QWidget):
             val_acc = progress.get("val_acc", 0)
 
             self._train_metrics_label.setText(
-                f"Loss treino: {train_loss:.4f} | Acc treino: {train_acc*100:.1f}%"
+                f"Train loss: {train_loss:.4f} | Train acc: {train_acc*100:.1f}%"
             )
             self._val_metrics_label.setText(
                 f"Loss val: {val_loss:.4f} | Acc val: {val_acc*100:.1f}%"
@@ -1038,21 +1038,21 @@ class TrainPanel(QWidget):
             if total_epochs > 0:
                 pct = 80 + int((epoch / total_epochs) * 15)  # 80-95% for final
                 self._progress_bar.setValue(pct)
-                self._epoch_label.setText(f"Modelo final - Época {epoch}/{total_epochs}")
+                self._epoch_label.setText(f"Final model - Epoch {epoch}/{total_epochs}")
 
                 train_loss = progress.get("train_loss", 0)
                 train_acc = progress.get("train_acc", 0)
                 self._train_metrics_label.setText(
-                    f"Loss treino: {train_loss:.4f} | Acc treino: {train_acc*100:.1f}%"
+                    f"Train loss: {train_loss:.4f} | Train acc: {train_acc*100:.1f}%"
                 )
-                self._val_metrics_label.setText("(treinando com todos os dados)")
+                self._val_metrics_label.setText("(training with all data)")
             else:
-                message = progress.get("message", "Treinando modelo final...")
+                message = progress.get("message", "Training final model...")
                 self._result_label.setText(message)
 
         elif phase == "cleanlab":
             self._progress_bar.setValue(98)
-            self._epoch_label.setText("Analisando erros (Cleanlab)...")
+            self._epoch_label.setText("Analyzing errors (Cleanlab)...")
             self._result_label.setText(progress.get("message", "Cleanlab..."))
 
     def _on_kfold_finished(self, model_info: ModelInfo | None) -> None:
@@ -1078,11 +1078,11 @@ class TrainPanel(QWidget):
                     n_issues = cleanlab.get("n_issues_found", 0)
                     low_quality = cleanlab.get("low_quality_count", 0)
                     if n_issues > 0:
-                        cleanlab_info = f"\nCleanlab: {n_issues} erros potenciais, {low_quality} baixa qualidade"
+                        cleanlab_info = f"\nCleanlab: {n_issues} potential errors, {low_quality} low quality"
 
             self._result_label.setText(
                 f"K-Fold: {mean_acc*100:.1f}% ± {std_acc*100:.1f}%\n"
-                f"Modelo final treinado ✓{cleanlab_info}"
+                f"Final model trained ✓{cleanlab_info}"
             )
             self._refresh_models_list()
             self._update_classify_button()
@@ -1091,20 +1091,20 @@ class TrainPanel(QWidget):
             # Show completion dialog
             QMessageBox.information(
                 self,
-                "K-Fold Concluído",
-                f"Treinamento K-Fold concluído!\n\n"
-                f"Acurácia média: {mean_acc*100:.1f}% ± {std_acc*100:.1f}%\n"
+                "K-Fold Completed",
+                f"K-Fold training completed!\n\n"
+                f"Mean accuracy: {mean_acc*100:.1f}% ± {std_acc*100:.1f}%\n"
                 f"{cleanlab_info}\n\n"
-                "Os scores de qualidade dos rótulos estão disponíveis\n"
-                "no modo REVISAR para identificar erros."
+                "Label quality scores are available\n"
+                "in REVIEW mode to identify errors."
             )
 
             # Ask to classify image
             reply = QMessageBox.question(
                 self,
-                "Classificar Imagem",
-                "Deseja classificar a imagem agora?\n"
-                "(Necessário para ordenar por incerteza)",
+                "Classify Image",
+                "Do you want to classify the image now?\n"
+                "(Required to order by uncertainty)",
                 QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
                 QMessageBox.StandardButton.Yes,
             )
@@ -1114,7 +1114,7 @@ class TrainPanel(QWidget):
 
             self._reset_training_ui()
         else:
-            self._result_label.setText("Treinamento K-Fold falhou")
+            self._result_label.setText("K-Fold training failed")
 
     def _cleanup_training(self) -> None:
         """Cleanup training thread and free memory."""
@@ -1139,8 +1139,8 @@ class TrainPanel(QWidget):
     def _reset_training_ui(self) -> None:
         """Reset training UI to initial state."""
         self._progress_bar.setValue(0)
-        self._epoch_label.setText("Época: --/--")
-        self._train_metrics_label.setText("Loss treino: -- | Acc treino: --")
+        self._epoch_label.setText("Epoch: --/--")
+        self._train_metrics_label.setText("Train loss: -- | Train acc: --")
         self._val_metrics_label.setText("Loss val: -- | Acc val: --")
         self._result_label.setText("--")
 
@@ -1164,10 +1164,10 @@ class TrainPanel(QWidget):
             # Check if predictions exist
             prediction_folder = self._service.get_prediction_folder()
             if prediction_folder and prediction_folder.exists():
-                self._classify_status.setText("Classificacao disponivel")
+                self._classify_status.setText("Classification available")
                 self._classify_status.setStyleSheet("color: #4ec9b0; font-size: 11px;")
             else:
-                self._classify_status.setText("Clique para classificar")
+                self._classify_status.setText("Click to classify")
                 self._classify_status.setStyleSheet("color: #888888; font-size: 11px;")
         else:
             self._classify_status.setText("")
@@ -1175,11 +1175,11 @@ class TrainPanel(QWidget):
     def _on_classify_image(self) -> None:
         """Handle classify image button click."""
         if not self._service or not self._service.has_active_model:
-            QMessageBox.warning(self, "Erro", "Nenhum modelo ativo.")
+            QMessageBox.warning(self, "Error", "No active model.")
             return
 
         if not self._stack_path:
-            QMessageBox.warning(self, "Erro", "Stack nao configurado.")
+            QMessageBox.warning(self, "Error", "Stack is not configured.")
             return
 
         # Confirm if predictions already exist
@@ -1187,8 +1187,8 @@ class TrainPanel(QWidget):
         if prediction_folder and prediction_folder.exists():
             reply = QMessageBox.question(
                 self,
-                "Reclassificar",
-                "Ja existe uma classificacao. Deseja reclassificar?",
+                "Reclassify",
+                "A classification already exists. Do you want to reclassify?",
                 QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
             )
             if reply != QMessageBox.StandardButton.Yes:
@@ -1196,7 +1196,7 @@ class TrainPanel(QWidget):
 
         # Start classification in background thread
         self._classify_btn.setEnabled(False)
-        self._classify_btn.setText("Classificando...")
+        self._classify_btn.setText("Classifying...")
         self._classify_status.setText("0%")
 
         # Show and clear log
@@ -1259,29 +1259,29 @@ class TrainPanel(QWidget):
         self._cleanup_classification()
 
         if result:
-            self._classify_status.setText("Concluido!")
+            self._classify_status.setText("Done!")
             self._classify_status.setStyleSheet("color: #4ec9b0; font-size: 11px;")
             self.image_classified.emit(result)
 
             QMessageBox.information(
                 self,
-                "Classificacao Concluida",
-                f"Imagem classificada com sucesso!\n\n"
+                "Classification Completed",
+                f"Image classified successfully!\n\n"
                 f"Classes: {len(result.classes)}\n\n"
-                "Agora voce pode ordenar por incerteza na aba Anotar."
+                "You can now order by uncertainty in the Annotate tab."
             )
         else:
-            self._classify_status.setText("Falha")
+            self._classify_status.setText("Failed")
             self._classify_status.setStyleSheet("color: #f14c4c; font-size: 11px;")
-            QMessageBox.warning(self, "Erro", "Falha na classificacao.")
+            QMessageBox.warning(self, "Error", "Classification failed.")
 
     def _on_classification_error(self, error_msg: str) -> None:
         """Handle classification error."""
         self._cleanup_classification()
         logger.error(f"Classification error: {error_msg}")
-        self._classify_status.setText("Erro")
+        self._classify_status.setText("Error")
         self._classify_status.setStyleSheet("color: #f14c4c; font-size: 11px;")
-        QMessageBox.critical(self, "Erro", f"Erro na classificacao:\n{error_msg}")
+        QMessageBox.critical(self, "Error", f"Classification error:\n{error_msg}")
 
     def _cleanup_classification(self) -> None:
         """Clean up classification thread and worker."""
@@ -1291,4 +1291,4 @@ class TrainPanel(QWidget):
             self._classification_thread = None
         self._classification_worker = None
         self._classify_btn.setEnabled(True)
-        self._classify_btn.setText("Classificar Imagem")
+        self._classify_btn.setText("Classify Image")

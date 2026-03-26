@@ -45,7 +45,7 @@ class GotoDialog(QDialog):
 
     def _setup_ui(self) -> None:
         """Setup the dialog UI."""
-        self.setWindowTitle("Ir para Coordenadas")
+        self.setWindowTitle("Go to Coordinates")
         self.setMinimumWidth(300)
         self.setModal(True)
 
@@ -54,7 +54,7 @@ class GotoDialog(QDialog):
 
         # Info label
         info_label = QLabel(
-            f"Digite as coordenadas (X: 0-{self._max_x - 1}, Y: 0-{self._max_y - 1})"
+            f"Enter coordinates (X: 0-{self._max_x - 1}, Y: 0-{self._max_y - 1})"
         )
         info_label.setStyleSheet("color: #808080;")
         layout.addWidget(info_label)
@@ -89,8 +89,8 @@ class GotoDialog(QDialog):
         button_box.rejected.connect(self.reject)
 
         # Style buttons
-        button_box.button(QDialogButtonBox.StandardButton.Ok).setText("Ir")
-        button_box.button(QDialogButtonBox.StandardButton.Cancel).setText("Cancelar")
+        button_box.button(QDialogButtonBox.StandardButton.Ok).setText("Go")
+        button_box.button(QDialogButtonBox.StandardButton.Cancel).setText("Cancel")
 
         layout.addWidget(button_box)
 

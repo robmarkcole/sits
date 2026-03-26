@@ -36,7 +36,7 @@ class MaskFilter(QWidget):
         layout.setSpacing(8)
 
         # Label
-        self._label = QLabel("Filtro:")
+        self._label = QLabel("Filter:")
         self._label.setStyleSheet("color: #808080; font-weight: bold;")
         layout.addWidget(self._label)
 
@@ -74,7 +74,7 @@ class MaskFilter(QWidget):
         self._class_counts = counts or {}
 
         # Create "All" option first
-        all_radio = QRadioButton("Todos")
+        all_radio = QRadioButton("All")
         all_radio.setChecked(True)
         self._button_group.addButton(all_radio)
         self._radio_buttons[None] = all_radio

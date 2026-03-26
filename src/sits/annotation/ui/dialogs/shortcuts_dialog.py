@@ -46,7 +46,7 @@ class ShortcutsDialog(QDialog):
 
     def _setup_ui(self) -> None:
         """Setup the dialog UI."""
-        self.setWindowTitle("Atalhos de Teclado")
+        self.setWindowTitle("Keyboard Shortcuts")
         self.setMinimumSize(400, 500)
         self.setModal(True)
 
@@ -64,7 +64,7 @@ class ShortcutsDialog(QDialog):
         content_layout.setSpacing(20)
 
         # Classification section
-        content_layout.addWidget(self._create_section_header("CLASSIFICACAO"))
+        content_layout.addWidget(self._create_section_header("CLASSIFICATION"))
 
         for cls in self._annotation_classes:
             content_layout.addWidget(
@@ -79,39 +79,39 @@ class ShortcutsDialog(QDialog):
         content_layout.addSpacing(10)
 
         # Navigation section
-        content_layout.addWidget(self._create_section_header("NAVEGACAO"))
+        content_layout.addWidget(self._create_section_header("NAVIGATION"))
         content_layout.addWidget(
-            self._create_shortcut_row(self._shortcuts_config.next_random, "Proximo aleatorio")
+            self._create_shortcut_row(self._shortcuts_config.next_random, "Next random sample")
         )
         content_layout.addWidget(
-            self._create_shortcut_row(self._shortcuts_config.previous, "Anterior no historico")
+            self._create_shortcut_row(self._shortcuts_config.previous, "Previous in history")
         )
         content_layout.addWidget(
-            self._create_shortcut_row(self._shortcuts_config.next, "Proximo no historico")
+            self._create_shortcut_row(self._shortcuts_config.next, "Next in history")
         )
         content_layout.addWidget(
-            self._create_shortcut_row(self._shortcuts_config.goto, "Ir para coordenadas")
+            self._create_shortcut_row(self._shortcuts_config.goto, "Go to coordinates")
         )
         content_layout.addWidget(
-            self._create_shortcut_row(self._shortcuts_config.cycle_mask, "Alternar filtro de mascara")
+            self._create_shortcut_row(self._shortcuts_config.cycle_mask, "Cycle mask filter")
         )
 
         content_layout.addSpacing(10)
 
         # Visualization section
-        content_layout.addWidget(self._create_section_header("VISUALIZACAO"))
+        content_layout.addWidget(self._create_section_header("VISUALIZATION"))
         content_layout.addWidget(
-            self._create_shortcut_row(self._shortcuts_config.cycle_visualization, "Alternar visualizacao")
+            self._create_shortcut_row(self._shortcuts_config.cycle_visualization, "Cycle visualization")
         )
 
         content_layout.addSpacing(10)
 
         # System section
-        content_layout.addWidget(self._create_section_header("SISTEMA"))
-        content_layout.addWidget(self._create_shortcut_row("Ctrl+O", "Abrir projeto"))
-        content_layout.addWidget(self._create_shortcut_row("Ctrl+S", "Salvar"))
-        content_layout.addWidget(self._create_shortcut_row("Ctrl+Q", "Sair"))
-        content_layout.addWidget(self._create_shortcut_row("F1", "Mostrar atalhos"))
+        content_layout.addWidget(self._create_section_header("SYSTEM"))
+        content_layout.addWidget(self._create_shortcut_row("Ctrl+O", "Open project"))
+        content_layout.addWidget(self._create_shortcut_row("Ctrl+S", "Save"))
+        content_layout.addWidget(self._create_shortcut_row("Ctrl+Q", "Quit"))
+        content_layout.addWidget(self._create_shortcut_row("F1", "Show shortcuts"))
 
         content_layout.addStretch()
 
@@ -121,7 +121,7 @@ class ShortcutsDialog(QDialog):
         # Close button
         button_box = QDialogButtonBox(QDialogButtonBox.StandardButton.Close)
         button_box.rejected.connect(self.reject)
-        button_box.button(QDialogButtonBox.StandardButton.Close).setText("Fechar")
+        button_box.button(QDialogButtonBox.StandardButton.Close).setText("Close")
         layout.addWidget(button_box)
 
     def _create_section_header(self, title: str) -> QLabel:

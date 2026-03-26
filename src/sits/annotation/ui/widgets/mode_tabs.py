@@ -18,7 +18,7 @@ class ModeTabs(QWidget):
     """
     Tab-like widget for switching between application modes.
 
-    Displays two buttons: ANOTAR and REVISAR, with clear visual
+    Displays three buttons: ANNOTATE, REVIEW, and TRAIN, with clear visual
     indication of which mode is currently active.
     """
 
@@ -39,21 +39,21 @@ class ModeTabs(QWidget):
         layout.setSpacing(0)
 
         # Annotate tab
-        self._annotate_btn = QPushButton("ANOTAR")
+        self._annotate_btn = QPushButton("ANNOTATE")
         self._annotate_btn.setCheckable(True)
         self._annotate_btn.setChecked(True)
         self._annotate_btn.clicked.connect(lambda: self._on_tab_clicked(AppMode.ANNOTATE))
         layout.addWidget(self._annotate_btn)
 
         # Review tab
-        self._review_btn = QPushButton("REVISAR")
+        self._review_btn = QPushButton("REVIEW")
         self._review_btn.setCheckable(True)
         self._review_btn.setChecked(False)
         self._review_btn.clicked.connect(lambda: self._on_tab_clicked(AppMode.REVIEW))
         layout.addWidget(self._review_btn)
 
         # Train tab
-        self._train_btn = QPushButton("TREINAR")
+        self._train_btn = QPushButton("TRAIN")
         self._train_btn.setCheckable(True)
         self._train_btn.setChecked(False)
         self._train_btn.clicked.connect(lambda: self._on_tab_clicked(AppMode.TRAIN))

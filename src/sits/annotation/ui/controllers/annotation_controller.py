@@ -41,11 +41,11 @@ class AnnotationController(QObject):
             True if annotation was successful.
         """
         if not self._app.is_project_loaded:
-            self.error_occurred.emit("Nenhum projeto carregado")
+            self.error_occurred.emit("No project loaded")
             return False
 
         if not self._app.get_current_coordinates():
-            self.error_occurred.emit("Nenhuma amostra selecionada")
+            self.error_occurred.emit("No sample selected")
             return False
 
         success = self._app.annotate(class_name)
@@ -55,7 +55,7 @@ class AnnotationController(QObject):
             self.sample_annotated.emit(class_name)
             self._emit_statistics()
         else:
-            self.error_occurred.emit(f"Falha ao anotar como: {class_name}")
+            self.error_occurred.emit(f"Failed to annotate as: {class_name}")
 
         return success
 
@@ -67,11 +67,11 @@ class AnnotationController(QObject):
             True if successful.
         """
         if not self._app.is_project_loaded:
-            self.error_occurred.emit("Nenhum projeto carregado")
+            self.error_occurred.emit("No project loaded")
             return False
 
         if not self._app.get_current_coordinates():
-            self.error_occurred.emit("Nenhuma amostra selecionada")
+            self.error_occurred.emit("No sample selected")
             return False
 
         success = self._app.mark_dont_know()
@@ -81,7 +81,7 @@ class AnnotationController(QObject):
             self.sample_annotated.emit("dont_know")
             self._emit_statistics()
         else:
-            self.error_occurred.emit("Falha ao marcar como dont_know")
+            self.error_occurred.emit("Failed to mark as dont_know")
 
         return success
 
@@ -93,11 +93,11 @@ class AnnotationController(QObject):
             True if successful.
         """
         if not self._app.is_project_loaded:
-            self.error_occurred.emit("Nenhum projeto carregado")
+            self.error_occurred.emit("No project loaded")
             return False
 
         if not self._app.get_current_coordinates():
-            self.error_occurred.emit("Nenhuma amostra selecionada")
+            self.error_occurred.emit("No sample selected")
             return False
 
         success = self._app.skip()
@@ -107,7 +107,7 @@ class AnnotationController(QObject):
             self.sample_annotated.emit("skip")
             self._emit_statistics()
         else:
-            self.error_occurred.emit("Falha ao pular amostra")
+            self.error_occurred.emit("Failed to skip sample")
 
         return success
 

@@ -52,7 +52,7 @@ class FilterBar(QWidget):
         layout.setSpacing(12)
 
         # Order by
-        order_label = QLabel("Ordenar:")
+        order_label = QLabel("Order:")
         order_label.setStyleSheet("color: #888888; font-size: 11px; border: none;")
         layout.addWidget(order_label)
 
@@ -60,7 +60,7 @@ class FilterBar(QWidget):
         self._order_combo.setFixedWidth(120)
         self._order_combo.setFixedHeight(26)
         self._order_combo.setStyleSheet(self._combo_style())
-        self._order_combo.addItem("Aleatorio", "random")
+        self._order_combo.addItem("Random", "random")
         self._order_combo.addItem("Grid", "grid")
         self._order_combo.currentIndexChanged.connect(self._on_order_changed)
         layout.addWidget(self._order_combo)
@@ -68,7 +68,7 @@ class FilterBar(QWidget):
         # === Uncertainty mode controls ===
 
         # Metric (only for uncertainty)
-        self._metric_label = QLabel("Métrica:")
+        self._metric_label = QLabel("Metric:")
         self._metric_label.setStyleSheet("color: #888888; font-size: 11px; border: none;")
         self._metric_label.setVisible(False)
         layout.addWidget(self._metric_label)
@@ -77,15 +77,15 @@ class FilterBar(QWidget):
         self._metric_combo.setFixedWidth(100)
         self._metric_combo.setFixedHeight(26)
         self._metric_combo.setStyleSheet(self._combo_style())
-        self._metric_combo.addItem("Confiança", "confidence")
-        self._metric_combo.addItem("Entropia", "entropy")
-        self._metric_combo.addItem("Margem", "margin")
+        self._metric_combo.addItem("Confidence", "confidence")
+        self._metric_combo.addItem("Entropy", "entropy")
+        self._metric_combo.addItem("Margin", "margin")
         self._metric_combo.currentIndexChanged.connect(self._on_metric_changed)
         self._metric_combo.setVisible(False)
         layout.addWidget(self._metric_combo)
 
         # Class filter (only for uncertainty)
-        self._class_label = QLabel("Classe:")
+        self._class_label = QLabel("Class:")
         self._class_label.setStyleSheet("color: #888888; font-size: 11px; border: none;")
         self._class_label.setVisible(False)
         layout.addWidget(self._class_label)
@@ -161,7 +161,7 @@ class FilterBar(QWidget):
         layout.addWidget(self._sep1)
 
         # Mask filter (always available)
-        mask_label = QLabel("Máscara:")
+        mask_label = QLabel("Mask:")
         mask_label.setStyleSheet("color: #888888; font-size: 11px; border: none;")
         layout.addWidget(mask_label)
 
@@ -297,10 +297,10 @@ class FilterBar(QWidget):
         if self._has_predictions:
             # Add uncertainty if not present
             if uncertainty_idx == -1:
-                self._order_combo.addItem("Incerteza", "uncertainty")
+                self._order_combo.addItem("Uncertainty", "uncertainty")
             # Add confusion if we have confusion data and not present
             if self._has_confusion_data and confusion_idx == -1:
-                self._order_combo.addItem("Confusão", "confusion")
+                self._order_combo.addItem("Confusion", "confusion")
         else:
             # Remove prediction-based options
             # Remove in reverse order to avoid index shifting
@@ -314,7 +314,7 @@ class FilterBar(QWidget):
         self._classes = classes
         self._class_combo.blockSignals(True)
         self._class_combo.clear()
-        self._class_combo.addItem("Todas", None)
+        self._class_combo.addItem("All", None)
         for cls in classes:
             self._class_combo.addItem(cls, cls)
         self._class_combo.blockSignals(False)
