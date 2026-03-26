@@ -91,8 +91,11 @@ sampling:
 ```
 
 The stack GeoTIFF must have `n_times × n_bands` bands in interleaved order:
-`[B0_t0, B1_t0, …, B0_t1, B1_t1, …]`. All paths are resolved relative to the
-directory that contains the YAML file.
+`[B0_t0, B1_t0, …, B0_t1, B1_t1, …]`.
+
+In the current implementation, relative paths are resolved from the parent of
+the YAML file directory. For example, if the config is at `demo/project.yaml`,
+use `./demo/data/stack.tif` (not `./data/stack.tif`).
 
 Start the app with a config:
 

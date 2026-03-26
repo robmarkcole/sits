@@ -1,32 +1,32 @@
-    project_name: Demo Project
-    session_folder: ./session
+project_name: Demo Project
+session_folder: ./demo/session
 
-    stack:
-      path: ./data/stack.tif
-      n_times: 6
-      bands:
-        - { name: B02, index: 0 }
-- { name: B03, index: 1 }
-- { name: B04, index: 2 }
-- { name: B08, index: 3 }
+stack:
+  path: ./demo/data/stack.tif
+  n_times: 6
+  bands:
+    - { name: B02, index: 0 }
+    - { name: B03, index: 1 }
+    - { name: B04, index: 2 }
+    - { name: B08, index: 3 }
 
-    annotation_classes:
-      - { name: vegetation, shortcut: "1", color: "#4CAF50" }
-      - { name: bare_soil,  shortcut: "2", color: "#FF9800" }
-      - { name: water,      shortcut: "3", color: "#2196F3" }
-      - { name: urban,      shortcut: "4", color: "#9C27B0" }
+annotation_classes:
+  - { name: vegetation, shortcut: "1", color: "#4CAF50" }
+  - { name: bare_soil,  shortcut: "2", color: "#FF9800" }
+  - { name: water,      shortcut: "3", color: "#2196F3" }
+  - { name: urban,      shortcut: "4", color: "#9C27B0" }
 
-    special_classes:
-      - { name: dont_know, shortcut: "Q", color: "#9E9E9E" }
-      - { name: skip,      shortcut: "W", color: "#607D8B" }
+special_classes:
+  - { name: dont_know, shortcut: "Q", color: "#9E9E9E" }
+  - { name: skip,      shortcut: "W", color: "#607D8B" }
 
-    spectral_indices:
-      - name: NDVI
-        formula: (B08 - B04) / (B08 + B04)
-        bands_required: [B08, B04]
-      - name: NDWI
-        formula: (B03 - B08) / (B03 + B08)
-        bands_required: [B03, B08]
+spectral_indices:
+  - name: NDVI
+    formula: (B08 - B04) / (B08 + B04)
+    bands_required: [B08, B04]
+  - name: NDWI
+    formula: (B03 - B08) / (B03 + B08)
+    bands_required: [B03, B08]
 
-    sampling:
-      strategy: random
+sampling:
+  strategy: random

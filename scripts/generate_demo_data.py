@@ -9,7 +9,6 @@ Usage:
 """
 
 import argparse
-import textwrap
 from pathlib import Path
 
 import numpy as np
@@ -157,42 +156,47 @@ def generate(output_dir: Path) -> None:
     # ------------------------------------------------------------------
     # Project YAML
     # ------------------------------------------------------------------
-    bands_yaml = "\n".join(
-        f"    - {{ name: {name}, index: {i} }}"
-        for i, name in enumerate(BANDS)
-    )
-
-    yaml_content = textwrap.dedent(f"""\
-        project_name: Demo Project
-        session_folder: ./session
-
-        stack:
-          path: ./data/stack.tif
-          n_times: {N_TIMES}
-          bands:
-        {bands_yaml}
-
-        annotation_classes:
-          - {{ name: vegetation, shortcut: "1", color: "#4CAF50" }}
-          - {{ name: bare_soil,  shortcut: "2", color: "#FF9800" }}
-          - {{ name: water,      shortcut: "3", color: "#2196F3" }}
-          - {{ name: urban,      shortcut: "4", color: "#9C27B0" }}
-
-        special_classes:
-          - {{ name: dont_know, shortcut: "Q", color: "#9E9E9E" }}
-          - {{ name: skip,      shortcut: "W", color: "#607D8B" }}
-
-        spectral_indices:
-          - name: NDVI
-            formula: (B08 - B04) / (B08 + B04)
-            bands_required: [B08, B04]
-          - name: NDWI
-            formula: (B03 - B08) / (B03 + B08)
-            bands_required: [B03, B08]
-
-        sampling:
-          strategy: random
-    """)
+        # ConfigLoader resolves relative paths from the parent of the config folder.
+        # If config is in demo/project.yaml, demo assets must be referenced as ./demo/...
+        demo_dir_name = output_dir.name
+        yaml_lines = [
+            "project_name: Demo Project",
+            f"session_folder: ./{demo_dir_name}/session",
+                "",
+                "stack:",
+            f"  path: ./{demo_dir_name}/data/stack.tif",
+                f"  n_times: {N_TIMES}",
+                "  bands:",
+        ]
+        yaml_lines.extend(
+                f"    - {{ name: {name}, index: {i} }}"
+                for i, name in enumerate(BANDS)
+        )
+        yaml_lines.extend([
+                "",
+                "annotation_classes:",
+                "  - { name: vegetation, shortcut: \"1\", color: \"#4CAF50\" }",
+                "  - { name: bare_soil,  shortcut: \"2\", color: \"#FF9800\" }",
+                "  - { name: water,      shortcut: \"3\", color: \"#2196F3\" }",
+                "  - { name: urban,      shortcut: \"4\", color: \"#9C27B0\" }",
+                "",
+                "special_classes:",
+                "  - { name: dont_know, shortcut: \"Q\", color: \"#9E9E9E\" }",
+                "  - { name: skip,      shortcut: \"W\", color: \"#607D8B\" }",
+                "",
+                "spectral_indices:",
+                "  - name: NDVI",
+                "    formula: (B08 - B04) / (B08 + B04)",
+                "    bands_required: [B08, B04]",
+                "  - name: NDWI",
+                "    formula: (B03 - B08) / (B03 + B08)",
+                "    bands_required: [B03, B08]",
+                "",
+                "sampling:",
+                "  strategy: random",
+                "",
+        ])
+        yaml_content = "\n".join(yaml_lines)
 
     yaml_path = output_dir / "project.yaml"
     yaml_path.write_text(yaml_content)
