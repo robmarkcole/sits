@@ -318,7 +318,7 @@ class BottomToolbar(QFrame):
         layout.addSpacing(24)
 
         # === Filter Section ===
-        filter_section = ToolbarSection("FILTRO DE MASCARA")
+        filter_section = ToolbarSection("MASK FILTER")
 
         self._filter_control = SegmentedControl()
         self._filter_control.selection_changed.connect(self._on_filter_changed)
@@ -333,8 +333,8 @@ class BottomToolbar(QFrame):
         labeled_section = ToolbarSection("MODO")
 
         self._labeled_filter_control = SegmentedControl()
-        self._labeled_filter_control.add_option(None, "Anotar")
-        self._labeled_filter_control.add_option("labeled", "Revisar")
+        self._labeled_filter_control.add_option(None, "Annotate")
+        self._labeled_filter_control.add_option("labeled", "Review")
         self._labeled_filter_control.set_value(None)
         self._labeled_filter_control.selection_changed.connect(self._on_labeled_filter_changed)
         labeled_section.add_widget(self._labeled_filter_control)
@@ -343,21 +343,21 @@ class BottomToolbar(QFrame):
         layout.addSpacing(24)
 
         # === Class Filter Section (for review mode) ===
-        self._class_filter_section = ToolbarSection("FILTRO CLASSE")
+        self._class_filter_section = ToolbarSection("CLASS FILTER")
 
         self._class_filter_combo = ModernComboBox()
-        self._class_filter_combo.addItem("Todas", None)
+        self._class_filter_combo.addItem("All", None)
         self._class_filter_combo.currentIndexChanged.connect(self._on_class_filter_changed)
         self._class_filter_section.add_widget(self._class_filter_combo)
 
         # Review navigation
         self._review_prev_btn = ModernButton("<", "")
-        self._review_prev_btn.setToolTip("Amostra anterior")
+        self._review_prev_btn.setToolTip("Previous sample")
         self._review_prev_btn.clicked.connect(self.review_prev_clicked.emit)
         self._class_filter_section.add_widget(self._review_prev_btn)
 
         self._review_next_btn = ModernButton(">", "")
-        self._review_next_btn.setToolTip("Proxima amostra")
+        self._review_next_btn.setToolTip("Next sample")
         self._review_next_btn.clicked.connect(self.review_next_clicked.emit)
         self._class_filter_section.add_widget(self._review_next_btn)
 
@@ -367,8 +367,8 @@ class BottomToolbar(QFrame):
         self._class_filter_section.add_widget(self._review_info)
 
         # Delete button
-        self._delete_btn = ModernButton("Excluir", "")
-        self._delete_btn.setToolTip("Excluir esta anotacao (Del)")
+        self._delete_btn = ModernButton("Delete", "")
+        self._delete_btn.setToolTip("Delete this annotation (Del)")
         self._delete_btn.setStyleSheet("""
             QPushButton {
                 background-color: #8b0000;
@@ -394,20 +394,20 @@ class BottomToolbar(QFrame):
         layout.addStretch()
 
         # === Navigation Section ===
-        self._nav_section = ToolbarSection("NAVEGACAO")
+        self._nav_section = ToolbarSection("NAVIGATION")
 
-        self._prev_btn = ModernButton("Anterior", "<")
-        self._prev_btn.setToolTip("Voltar no historico (<-)")
+        self._prev_btn = ModernButton("Previous", "<")
+        self._prev_btn.setToolTip("Back in history (<-)")
         self._prev_btn.clicked.connect(self.previous_clicked.emit)
         self._nav_section.add_widget(self._prev_btn)
 
-        self._random_btn = ModernButton("Proximo", "", primary=True)
-        self._random_btn.setToolTip("Proxima amostra aleatoria (Space / ->)")
+        self._random_btn = ModernButton("Next", "", primary=True)
+        self._random_btn.setToolTip("Next random sample (Space / ->)")
         self._random_btn.clicked.connect(self.random_clicked.emit)
         self._nav_section.add_widget(self._random_btn)
 
-        self._goto_btn = ModernButton("Ir para...", "")
-        self._goto_btn.setToolTip("Ir para coordenadas especificas (G)")
+        self._goto_btn = ModernButton("Go to...", "")
+        self._goto_btn.setToolTip("Go to specific coordinates (G)")
         self._goto_btn.clicked.connect(self.goto_clicked.emit)
         self._nav_section.add_widget(self._goto_btn)
 
@@ -489,7 +489,7 @@ class BottomToolbar(QFrame):
         """Set available classes for filtering."""
         self._class_filter_combo.blockSignals(True)
         self._class_filter_combo.clear()
-        self._class_filter_combo.addItem("Todas", None)
+        self._class_filter_combo.addItem("All", None)
         for cls in classes:
             self._class_filter_combo.addItem(cls, cls)
         self._class_filter_combo.blockSignals(False)

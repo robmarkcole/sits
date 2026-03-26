@@ -36,24 +36,24 @@ class NavigationBar(QWidget):
         layout.addStretch()
 
         # Previous button
-        self._prev_button = QPushButton("< Anterior")
-        self._prev_button.setToolTip("Voltar no historico (<-)")
+        self._prev_button = QPushButton("< Previous")
+        self._prev_button.setToolTip("Back in history (<-)")
         self._prev_button.setMinimumWidth(100)
         self._prev_button.clicked.connect(self.previous_clicked.emit)
         self._prev_button.setStyleSheet(self._button_style())
         layout.addWidget(self._prev_button)
 
         # Random button
-        self._random_button = QPushButton("Aleatorio")
-        self._random_button.setToolTip("Proximo aleatorio (Space)")
+        self._random_button = QPushButton("Random")
+        self._random_button.setToolTip("Next random sample (Space)")
         self._random_button.setMinimumWidth(120)
         self._random_button.clicked.connect(self.random_clicked.emit)
         self._random_button.setStyleSheet(self._primary_button_style())
         layout.addWidget(self._random_button)
 
         # Next button
-        self._next_button = QPushButton("Proximo >")
-        self._next_button.setToolTip("Avancar no historico (->)")
+        self._next_button = QPushButton("Next >")
+        self._next_button.setToolTip("Forward in history (->)")
         self._next_button.setMinimumWidth(100)
         self._next_button.clicked.connect(self.next_clicked.emit)
         self._next_button.setStyleSheet(self._button_style())
@@ -63,8 +63,8 @@ class NavigationBar(QWidget):
         layout.addSpacing(20)
 
         # Go to button
-        self._goto_button = QPushButton("Ir para...")
-        self._goto_button.setToolTip("Ir para coordenadas especificas (G)")
+        self._goto_button = QPushButton("Go to...")
+        self._goto_button.setToolTip("Go to specific coordinates (G)")
         self._goto_button.setMinimumWidth(100)
         self._goto_button.clicked.connect(self.goto_clicked.emit)
         self._goto_button.setStyleSheet(self._button_style())

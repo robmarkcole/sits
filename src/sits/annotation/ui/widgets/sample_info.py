@@ -61,7 +61,7 @@ class SampleInfo(QFrame):
         coords_icon.setStyleSheet("font-size: 16px; background: transparent;")
         coords_layout.addWidget(coords_icon)
 
-        coords_label = QLabel("COORDENADAS")
+        coords_label = QLabel("COORDINATES")
         coords_label.setStyleSheet("""
             QLabel {
                 color: #606060;
@@ -124,7 +124,7 @@ class SampleInfo(QFrame):
         status_layout.addWidget(self._check_indicator)
 
         # Annotation class label
-        self._annotation_label = QLabel("Nao anotado")
+        self._annotation_label = QLabel("Not annotated")
         self._annotation_label.setStyleSheet("""
             QLabel {
                 color: #808080;
@@ -138,7 +138,7 @@ class SampleInfo(QFrame):
         self._remove_btn = QPushButton("X")
         self._remove_btn.setFixedSize(24, 24)
         self._remove_btn.setCursor(Qt.CursorShape.PointingHandCursor)
-        self._remove_btn.setToolTip("Remover anotacao")
+        self._remove_btn.setToolTip("Remove annotation")
         self._remove_btn.setStyleSheet("""
             QPushButton {
                 background-color: transparent;
@@ -235,7 +235,7 @@ class SampleInfo(QFrame):
                 }
             """)
 
-            self._annotation_label.setText("Nao anotado")
+            self._annotation_label.setText("Not annotated")
             self._annotation_label.setStyleSheet("""
                 QLabel {
                     color: #808080;
@@ -251,9 +251,9 @@ class SampleInfo(QFrame):
         """Format class name for display."""
         name = class_name.replace("_", " ")
         if name == "dont know":
-            return "Nao Sei"
+            return "Don't Know"
         elif name == "skip":
-            return "Pulado"
+            return "Skipped"
         elif name == "background":
             return "Background"
         return name.title()

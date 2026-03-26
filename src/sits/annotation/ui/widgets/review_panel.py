@@ -227,7 +227,7 @@ class ReviewPanel(QWidget):
     def set_class_options(self, class_names: list[str]) -> None:
         self._class_combo.blockSignals(True)
         self._class_combo.clear()
-        self._class_combo.addItem("Todas", None)
+        self._class_combo.addItem("All", None)
         for name in class_names:
             display_name = name.replace("_", " ").title()
             self._class_combo.addItem(display_name, name)
@@ -235,7 +235,7 @@ class ReviewPanel(QWidget):
 
         self._reclassify_combo.blockSignals(True)
         self._reclassify_combo.clear()
-        self._reclassify_combo.addItem("Selecionar...", None)
+        self._reclassify_combo.addItem("Select...", None)
         for name in class_names:
             display_name = name.replace("_", " ").title()
             self._reclassify_combo.addItem(display_name, name)

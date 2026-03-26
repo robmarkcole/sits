@@ -74,14 +74,14 @@ class MiniMap(QWidget):
         mode_layout.setContentsMargins(0, 0, 0, 0)
         mode_layout.setSpacing(4)
 
-        mode_label = QLabel("Exibir:")
+        mode_label = QLabel("Show:")
         mode_label.setStyleSheet("color: #808080; font-size: 11px;")
         mode_layout.addWidget(mode_label)
 
         self._mode_combo = QComboBox()
-        self._mode_combo.addItem("Imagem", MinimapMode.IMAGE)
-        self._mode_combo.addItem("Mascara", MinimapMode.MASK)
-        self._mode_combo.addItem("Nenhum", MinimapMode.NONE)
+        self._mode_combo.addItem("Image", MinimapMode.IMAGE)
+        self._mode_combo.addItem("Mask", MinimapMode.MASK)
+        self._mode_combo.addItem("None", MinimapMode.NONE)
         self._mode_combo.setStyleSheet("""
             QComboBox {
                 background-color: #3c3c3c;

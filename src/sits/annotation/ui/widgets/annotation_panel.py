@@ -32,15 +32,15 @@ class AnnotationPanel(QWidget):
         layout.setSpacing(8)
 
         # Navigation buttons (compact)
-        self._prev_btn = self._create_button("Ant [Left]")
+        self._prev_btn = self._create_button("Prev [Left]")
         self._prev_btn.clicked.connect(self.previous_clicked)
         layout.addWidget(self._prev_btn)
 
-        self._random_btn = self._create_button("Aleatorio [Space]", primary=True)
+        self._random_btn = self._create_button("Random [Space]", primary=True)
         self._random_btn.clicked.connect(self.random_clicked)
         layout.addWidget(self._random_btn)
 
-        self._goto_btn = self._create_button("Ir para [G]")
+        self._goto_btn = self._create_button("Go to [G]")
         self._goto_btn.clicked.connect(self.goto_clicked)
         layout.addWidget(self._goto_btn)
 
@@ -50,7 +50,7 @@ class AnnotationPanel(QWidget):
         layout.addWidget(sep)
 
         # Mask filter
-        mask_label = QLabel("Mascara:")
+        mask_label = QLabel("Mask:")
         mask_label.setStyleSheet("color: #888888; font-size: 11px;")
         layout.addWidget(mask_label)
 
@@ -62,7 +62,7 @@ class AnnotationPanel(QWidget):
         layout.addWidget(self._mask_combo)
 
         # Strategy selector
-        strategy_label = QLabel("Estrategia:")
+        strategy_label = QLabel("Strategy:")
         strategy_label.setStyleSheet("color: #888888; font-size: 11px;")
         layout.addWidget(strategy_label)
 

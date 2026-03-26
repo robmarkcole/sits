@@ -56,9 +56,9 @@ class ClassCard(QFrame):
         # Name
         name = self.class_name.replace("_", " ").title()
         if name == "Dont Know":
-            name = "Nao Sei"
+            name = "Don't Know"
         elif name == "Skip":
-            name = "Pular"
+            name = "Skip"
         self._name_label = QLabel(name)
         self._name_label.setStyleSheet("color: #cccccc; font-size: 12px; font-weight: 500; background: transparent;")
         top_row.addWidget(self._name_label)
@@ -338,7 +338,7 @@ class ClassPanel(QWidget):
         layout.addStretch()
 
         # Delete button (review mode only)
-        self._delete_btn = QPushButton("Excluir")
+        self._delete_btn = QPushButton("Delete")
         self._delete_btn.setStyleSheet("""
             QPushButton {
                 background-color: #5a1d1d;
@@ -405,7 +405,7 @@ class ClassPanel(QWidget):
         # Setup filter combo
         self._filter_combo.blockSignals(True)
         self._filter_combo.clear()
-        self._filter_combo.addItem("Todas", None)
+        self._filter_combo.addItem("All", None)
         for cls in annotation_classes:
             display = cls.name.replace("_", " ").title()
             self._filter_combo.addItem(display, cls.name)
@@ -426,7 +426,7 @@ class ClassPanel(QWidget):
         self._delete_btn.setVisible(enabled)
 
         if enabled:
-            self._header.setText("REVISAR")
+            self._header.setText("REVIEW")
         else:
             self._header.setText("CLASSES")
 
@@ -434,11 +434,11 @@ class ClassPanel(QWidget):
 
     def _update_hint(self) -> None:
         if self._review_mode:
-            self._hint_label.setText("Clique para reclassificar")
+            self._hint_label.setText("Click to reclassify")
         elif self._prediction_mode:
-            self._hint_label.setText("Predicoes do modelo")
+            self._hint_label.setText("Model predictions")
         else:
-            self._hint_label.setText("[S] Similaridade")
+            self._hint_label.setText("[S] Similarity")
 
     # === Counts ===
 

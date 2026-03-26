@@ -535,11 +535,11 @@ class TrainPanel(QWidget):
         results_layout.addWidget(self._result_label)
 
         results_buttons = QHBoxLayout()
-        self._confusion_btn = QPushButton("Ver Confusion Matrix")
+        self._confusion_btn = QPushButton("View Confusion Matrix")
         self._confusion_btn.setEnabled(False)
         results_buttons.addWidget(self._confusion_btn)
 
-        self._curves_btn = QPushButton("Ver Curvas")
+        self._curves_btn = QPushButton("View Curves")
         self._curves_btn.setEnabled(False)
         results_buttons.addWidget(self._curves_btn)
 
