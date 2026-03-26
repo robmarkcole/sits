@@ -30,3 +30,57 @@ uv sync --extra dev
 sits-annotate
 ```
 
+### Configure an annotation project
+
+The annotation app needs a project YAML config (stack imagery, session folder, classes, and optional mask).
+
+If you open the app without loading a project, the training tab can show:
+`TrainPanel: No samples provider function set`
+
+That message means no project is loaded yet (or no annotation context is available), so there are no samples to train on.
+
+Minimal example (`project.yaml`):
+
+```yaml
+project_name: Demo Project
+session_folder: ./session
+
+stack:
+	path: ./data/stack.tif
+	n_times: 12
+	bands:
+		- { name: B02, index: 0 }
+		- { name: B03, index: 1 }
+		- { name: B04, index: 2 }
+		- { name: B08, index: 3 }
+
+annotation_classes:
+	- { name: class_a, shortcut: "1", color: "#4CAF50" }
+	- { name: class_b, shortcut: "2", color: "#2196F3" }
+
+special_classes:
+	- { name: dont_know, shortcut: "Q", color: "#9E9E9E" }
+	- { name: skip, shortcut: "W", color: "#607D8B" }
+
+spectral_indices:
+	-
+		name: NDVI
+		formula: (B08 - B04) / (B08 + B04)
+		bands_required: [B08, B04]
+
+sampling:
+	strategy: random
+```
+
+Start the app with a config directly:
+
+```bash
+sits-annotate ./project.yaml
+```
+
+Or start without args and load it from the UI with `Ctrl+O`.
+
+After loading a project:
+- Navigate and annotate samples first.
+- Then open the Train tab; sample counts should appear and training will be enabled once you have enough labeled samples.
+
